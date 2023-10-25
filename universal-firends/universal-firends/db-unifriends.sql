@@ -1,211 +1,169 @@
-create database universal_friends
-go
+CREATE DATABASE universal_friends
+GO
 
-use universal_friends
-go
+USE universal_friends
+GO
 
-create table chats
-(
-chatID int primary key
-);
-go
+CREATE TABLE carreras (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL
+)
+GO
 
-create table cargos
-(
-cargoID int primary key,
-nombre varchar(20) not null,
-descripcion varchar(250) not null
-);
-go
+CREATE TABLE usuarios (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+    apellido_paterno VARCHAR(100) NOT NULL,
+    apellido_materno VARCHAR(100) NOT NULL,
+    correo_electronico VARCHAR(100) NOT NULL,
+    contrasenia VARCHAR(100) NOT NULL,
+    fecha_de_registro DATE DEFAULT CONVERT(DATE, GETDATE()),
+    codigo_carrera INT NOT NULL FOREIGN KEY REFERENCES carreras(codigo),
+    fecha_de_nacimiento DATE NOT NULL
+)
+GO
 
-create table docentes
-(
-docenteID int primary key,
-nombre varchar(20) not null,
-apellido_paterno varchar(20) not null,
-apellido_materno varchar(20) not null
-);
-go
+CREATE TABLE perfiles_de_usuario (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_usuario INT FOREIGN KEY REFERENCES usuarios(codigo),
+    nombre_perfil VARCHAR(15) NOT NULL,
+    descripcion VARCHAR(200) NOT NULL,
+    foto_perfil IMAGE NOT NULL
+)
+GO
 
-create table cursos
-(
-cursoID int primary key,
-nombre varchar(20) not null
-);
-go
+CREATE TABLE intereses (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL
+)
+GO
 
-create table sedes
-(
-sedeID int primary key,
-nombre varchar(20) not null,
-direccion varchar(30) not null
-);
-go
+CREATE TABLE interes_usuario (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_usuario INT FOREIGN KEY REFERENCES usuarios(codigo),
+    codigo_interes INT FOREIGN KEY REFERENCES intereses(codigo)
+)
+GO
 
-create table intereses
-(
-interesID int primary key,
-nombre varchar(20) not null
-);
-go
+CREATE TABLE amistades (
+    usuario1 INT NOT NULL,
+    usuario2 INT NOT NULL,
+    PRIMARY KEY (usuario1, usuario2),
+    FOREIGN KEY (usuario1) REFERENCES usuarios(codigo),
+    FOREIGN KEY (usuario2) REFERENCES usuarios(codigo),
+    fecha_inicio DATETIME NOT NULL DEFAULT GETDATE()
+)
+GO
 
-create table tipos_notificacion
-(
-tipnotID int primary key,
-tipo varchar(20) not null
-);
-go
+CREATE TABLE sedes (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+    direccion VARCHAR(100) NOT NULL,
+)
+GO
 
-create table carreras
-(
-carreraID int primary key,
-nombre varchar(20) not null
-);
-go
+CREATE TABLE aulas (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    piso INT NOT NULL,
+    pabellon CHAR(1) NOT NULL,
+    codigo_sede INT NOT NULL FOREIGN KEY REFERENCES sedes(codigo)
+)
+GO
 
-create table aulas
-(
-aulaID int primary key,
-piso int not null,
-pabellon char(1) not null,
-sedeID int,
-foreign key (sedeID) references sedes(sedeID)
-);
-go
+CREATE TABLE cursos(
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+)
+GO
 
-create table secciones
-(
-seccionID int primary key,
-nombre varchar(4) not null,
-cursoID int,
-foreign key (cursoID) references cursos(cursoID)
-);
-go
+CREATE TABLE chats (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1)
+)
+GO
 
-create table secciones_clases
-(
-secclaseID int primary key,
-hora_inicio time not null,
-hora_fin time not null,
-dia_semana varchar(10) not null,
-seccionID int not null,
-aulaID int not null,
-foreign key (seccionID) references secciones(seccionID),
-foreign key (aulaID) references aulas(aulaID)
-);
-go
+CREATE TABLE usuario_chat (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_usuario INT NOT NULL FOREIGN KEY REFERENCES usuarios(codigo),
+    codigo_chat INT NOT NULL FOREIGN KEY REFERENCES chats(codigo)
+)
+GO
 
-create table secciones_docente
-(
-secdocenteID int primary key,
-seccionID int not null,
-docenteID int not null,
-cargoID int not null,
-foreign key (seccionID) references secciones(seccionID),
-foreign key (docenteID) references docentes(docenteID),
-foreign key (cargoID) references cargos(cargoID)
-);
-go
+CREATE TABLE mensajes (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    fecha_hora DATETIME NOT NULL DEFAULT GETDATE(),
+    codigo_usuario_chat INT NOT NULL FOREIGN KEY REFERENCES usuario_chat(codigo),
+    contenido TEXT NOT NULL
+)
+GO
 
-create table usuarios
-(
-usuarioID int primary key,
-nombre varchar(20) not null,
-apellido_paterno varchar(20) not null,
-apellido_materno varchar(20) not null,
-correo_electronico varchar(20) not null,
-contrasenia varchar(20) not null,
-fecha_registro date not null,
-fecha_nacimiento date not null,
-carreraID int not null,
-foreign key (carreraID) references carreras(carreraID),
-);
-go
+CREATE TABLE docentes (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+    apellido_paterno VARCHAR(100) NOT NULL,
+    apellido_materno VARCHAR(100) NOT NULL
+)
+GO
 
-create table amistades
-(
-usuario1 int not null,
-usuario2 int not null,
-fecha_inicio datetime not null,
-primary key (usuario1, usuario2),
-foreign key (usuario1) references usuarios(usuarioID),
-foreign key (usuario2) references usuarios(usuarioID)
-);
-go
+CREATE TABLE tipos_notificacion (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    tipo VARCHAR(100) NOT NULL
+)
+GO
 
-create table intereses_usuario
-(
-intusuarioID int primary key,
-usuarioID int not null,
-interesID int not null,
-foreign key (usuarioID) references usuarios(usuarioID),
-foreign key (interesID) references intereses(interesID)
-);
-go
+CREATE TABLE notificaciones (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_receptor INT NOT NULL FOREIGN KEY REFERENCES usuarios(codigo),
+    codigo_tipo_notificacion INT NOT NULL FOREIGN KEY REFERENCES tipos_notificacion(codigo),
+    contenido VARCHAR(100) NOT NULL,
+    fecha_hora DATETIME NOT NULL DEFAULT GETDATE()
+)
+GO
 
-create table secciones_alumno
-(
-secalumnoID int primary key,
-seccionID int not null,
-usuarioID int not null,
-foreign key (seccionID) references secciones(seccionID),
-foreign key (usuarioID) references usuarios(usuarioID)
-);
-go
+CREATE TABLE secciones (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(4) NOT NULL,
+    codigo_curso INT NOT NULL FOREIGN KEY REFERENCES cursos(codigo)
+)
+GO
 
-create table usuarios_chat
-(
-usuchatID int primary key,
-usuarioID int not null,
-chatID int not null,
-foreign key (usuarioID) references usuarios(usuarioID),
-foreign key (chatID) references chats(chatID)
-);
-go
+CREATE TABLE sesiones_de_clase (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    hora_inicio TIME NOT NULL,
+    hora_fin TIME NOT NULL,
+    dia_semana VARCHAR(10) NOT NULL,
+    codigo_seccion INT NOT NULL FOREIGN KEY REFERENCES secciones(codigo),
+    codigo_aula INT NOT NULL FOREIGN KEY REFERENCES aulas(codigo),
+)
+GO
 
-create table mensajes
-(
-mensajeID int primary key,
-fecha_hora datetime not null,
-contenido text not null,
-usuarioID int not null,
-foreign key (usuarioID) references usuarios(usuarioID)
-);
-go
+CREATE TABLE cargos (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre VARCHAR(100) NOT NULL,
+    descripcion VARCHAR(100) NOT NULL
+)
+GO
 
-create table perfiles_usaurio
-(
-perusuarioID int primary key,
-usuarioID int not null,
-nombre_perfil varchar(15) not null,
-descripccion varchar(200) not null,
-foto_perfil image not null,
-foreign key (usuarioID) references usuarios(usuarioID)
-);
-go
+CREATE TABLE seccion_docente (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_seccion INT NOT NULL FOREIGN KEY REFERENCES secciones(codigo),
+    codigo_docente INT NOT NULL FOREIGN KEY REFERENCES docentes(codigo),
+    codigo_cargo INT NOT NULL FOREIGN KEY REFERENCES cargos(codigo),
+)
+GO
 
-create table valoraciones
-(
-valoracionID int primary key,
-usuarioID int not null,
-docenteID int not null,
-cursoID int not null,
-comentario varchar(200) not null,
-puntuacion smallint not null,
-foreign key (usuarioID) references usuarios(usuarioID),
-foreign key (docenteID) references docentes(docenteID),
-foreign key (cursoID) references cursos(cursoID)
-);
-go
+CREATE TABLE seccion_alumno (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_seccion INT NOT NULL FOREIGN KEY REFERENCES secciones(codigo),
+    codigo_alumno INT NOT NULL FOREIGN KEY REFERENCES usuarios(codigo)
+)
+GO
 
-create table notificaciones
-(
-notifiID int primary key,
-usuarioID int not null,
-tipnotID int not null,
-contenido varchar(100) not null,
-fecha_hora datetime not null,
-foreign key (usuarioID) references usuarios(usuarioID),
-foreign key (tipnotID) references tipos_notificacion(tipnotID),
-);
-go
+CREATE TABLE valoraciones (
+    codigo INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_usuario INT NOT NULL FOREIGN KEY REFERENCES usuarios(codigo),
+    codigo_docente_valorado INT NOT NULL FOREIGN KEY REFERENCES docentes(codigo),
+    codigo_curso INT NOT NULL FOREIGN KEY REFERENCES cursos(codigo),
+    comentario VARCHAR(200) NOT NULL,
+    puntuacion SMALLINT NOT NULL
+)
+GO
