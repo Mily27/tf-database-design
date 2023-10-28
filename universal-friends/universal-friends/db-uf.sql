@@ -239,7 +239,16 @@ VALUES ('Ingeniería de Software'),
        ('Ciencias de la Computación'),
        ('Ingeniería de Sistemas'),
        ('Arquitectura'),
-       ('Derecho')
+       ('Derecho'),
+       ('Medicina'),
+       ('Ingeniería Civil'),
+       ('Psicología'),
+       ('Administración y Finanzas'),
+       ('Enfermería'),
+       ('Derecho'),
+       ('Arquitectura'),
+	   ('Ciencias Políticas'),
+       ('Ciencias Ambientales')
 GO
 
 -- Insertar usuarios
@@ -396,7 +405,11 @@ VALUES ('Futbol'),
        ('Tecnología'),
        ('Música'),
        ('Cocina'),
-       ('Moda')
+       ('Moda'),
+	   ('Ciclo Academico'),
+	   ('Idiomas'),
+	   ('Metas Academicas'),
+	   ('Viajes')
 GO
 
 -- Insertar interes_usuario
@@ -478,7 +491,17 @@ VALUES ('Diseño de Base de Datos'),
        ('Matemática Discreta'),
        ('Comprensión y Producción de Lenguaje'),
        ('Fisica 2'),
-       ('Programacion 1')
+       ('Programacion 1'),
+	   ('Introducción a la Psicología'), 
+	   ('Microeconomía'),
+	   ('Literatura Mundial'),
+	   ('Química Orgánica'),
+	   ('Programación en C++'),
+	   ('Historia del Arte'),
+	   ('Derecho Constitucional'),
+	   ('Biología Celular y Molecular'),
+	   ('Sociología de la Desigualdad'),
+	   ('Ética Empresarial')
 GO
 
 -- Insertar chats
@@ -597,75 +620,3 @@ VALUES (1, 2, 1, 'El mejor docente que he podido conocer', 5),
 	   (2, 4, 3, 'Siempre llega tarde a clase', 1),
 	   (3, 3, 4, 'Profesor neutral', 3),
 	   (5, 1, 5, 'Profesor comprometido con la enseñanza', 5)
-
-
---Insertacion de datos
-insert into cargos (nombre, descripcion)
-	values ('Rector', 'El rector es el líder máximo de la universidad, supervisa todas las operaciones.'),
-('Decano', 'Los decanos dirigen facultades o escuelas específicas y supervisan programas academicos.'),
-('Director de Admisiones', 'Coordina el proceso de admisiones de nuevos estudiantes.'),
-('Profesor', 'Imparte clases, realiza investigaciones academicas.'),
-('Director de Investigación', 'Supervisa y coordina las actividades en la universidad.'),
-('Director de Asuntos Estudiantiles', 'Se ocupa de la vida estudiantil,orientación, apoyo académico y bienestar estudiantil.'),
-('Director de Finanzas', 'Gestiona la administración financiera de la universidad, incluyendo presupuestos y contabilidad'),
-('Bibliotecario Universitario', 'Supervisa la biblioteca de la universidad y administra recursos bibliográficos.'),
-('Director de Relaciones Públicas', 'Administra las comunicaciones y relaciones públicas de la universidad para mejorar su imagen.'),
-('Jefe de Seguridad Universitaria', 'Garantiza la seguridad en el campus universitario.')
-go		
-
-/*Insertacion de datos
-insert into cargos (nombre, apellido_paterno, apellido_materno)
-	values('Merli','Quispe', 'Huaman'), ('Nadia', 'Duplan', 'Ronaldo'), ('Carlos', 'Gomez', 'Rodríguez'), ('Isabela', 'Fernandez', 'Vargas'), ('Diego', 'Silva', 'Molina'), ('Mariana', 'Lopez', 'Gutierrez'), ('Luis', 'Perez', 'Sánchez'), ('Ana', 'Martínez', 'Hernandez'), ('Andres', 'Diaz', 'Suarez'), ('Camila', 'Torres', 'Rojas')
-go
-*/
---Insertacion de datos
-insert into cursos (nombre)
-	values('Introducción a la Psicología'), 
-('Microeconomía'),
-('Literatura Mundial'),
-('Química Orgánica'),
-('Programación en C++'),
-('Historia del Arte'),
-('Derecho Constitucional'),
-('Biología Celular y Molecular'),
-('Sociología de la Desigualdad'),
-('Ética Empresarial')
-go
-
---Insertacion de datos
-insert into sedes (nombre,direccion)
-	values('UPC Villa', 'Avenida Alameda San Marcos cuadra 2, Chorrillos'),
-	('UPC San Isidro', 'Cuadra 22 de la avenida Salaverry, San Isidro'),
-	('UPC Monterrico', 'Cuadra 23 de la avenida Primavera, Surco'),
-	('UPC San Miguel', 'De La Marina, 2810, San Miguel')
-go
-
---Insertacion de datos
-
-insert into intereses (nombre) 
-values ('Carrera'), ('Horario'),('Hobbies'), ('Idiomas'), ('Proyectos'), ('Eventos'), ('Ubicacion'), ('Ciclo Academico'), ('Metas Academicas'), ('Viajes')
-go
-
---Insertacion de datos
-
-insert into tipos_notificacion (tipo)
-	values ('SMS'), ('Correo'), ('Aplicacion UF')
-go
-
---Insertacion de datos
-
-insert into carreras (nombre)
-	values ('Medicina'),
-('Ingeniería Civil'),
-('Psicología'),
-('Administración de Empresas'),
-('Ciencias de la Computación'),
-('Enfermería'),
-('Derecho'),
-('Arquitectura'),
-('Ciencias Políticas'),
-('Ciencias Ambientales')
-go
-
-select * from intereses
-go
