@@ -75,13 +75,13 @@ db.createCollection('secciones', {
     validator: {
         $jsonSchema: {
             bsonType: 'object',
-            required : ['nombre', 'codigo_curso', 'docentes'],
+            required : ['nombre', 'curso', 'docentes'],
             properties: {
                 nombre: {
                     bsonType: 'string'
                 },
-                codigo_curso: {
-                    bsonType: 'objectId'
+                curso: {
+                    bsonType: 'string'
                 },
                 docentes: {
                     bsonType: 'array',
