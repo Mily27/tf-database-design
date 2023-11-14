@@ -1,3 +1,5 @@
+use universal_friends
+
 db.createCollection('usuarios', {
     validator: {
         $jsonSchema: {
