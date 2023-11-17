@@ -31,7 +31,7 @@ db.createCollection('usuarios', {
                     bsonType: 'string'
                 },
                 codigo_carrera: {
-                    bsonType: 'objectId'
+                    bsonType: 'string'
                 },
                 fecha_registro: {
                     bsonType: 'date'
@@ -69,42 +69,6 @@ db.createCollection('docentes', {
         }
     }
 })
-
-
-db.createCollection('secciones', {
-    validator: {
-        $jsonSchema: {
-            bsonType: 'object',
-            required : ['nombre', 'curso', 'docentes'],
-            properties: {
-                nombre: {
-                    bsonType: 'string'
-                },
-                curso: {
-                    bsonType: 'string'
-                },
-                docentes: {
-                    bsonType: 'array',
-                    minItems: 2,
-                    maxItems: 7,
-                    items: {
-                        bsonType: 'object',
-                        required: ['codigo_docente', 'cargo'],
-                        properties: {
-                            codigo_docente: {
-                                bsonType: 'objectId'
-                            },
-                            cargo: {
-                                bsonType: 'string'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-})
-
 
 db.createCollection('valoraciones', {
     validator: {
