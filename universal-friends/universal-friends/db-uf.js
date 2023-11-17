@@ -10,7 +10,7 @@ db.createCollection('usuarios', {
             'apellido_materno',
             'correo_electronico',
             'contrasenia',
-            'codigo_carrera',
+            'carrera',
             'fecha_registro',
             'intereses'
             ],
@@ -30,7 +30,7 @@ db.createCollection('usuarios', {
                 contrasenia: {
                     bsonType: 'string'
                 },
-                codigo_carrera: {
+                carrera: {
                     bsonType: 'string'
                 },
                 fecha_registro: {
