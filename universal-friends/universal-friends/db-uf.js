@@ -83,10 +83,10 @@ db.createCollection('valoraciones', {
             ],
             properties: {
                 codigo_usuario: {
-                    bsonType: 'objectId'
+                    bsonType: 'int'
                 },
                 codigo_docente_valorado: {
-                    bsonType: 'objectId'
+                    bsonType: 'int'
                 },
                 curso: {
                     bsonType: 'string'
