@@ -7,3 +7,13 @@ db.valoraciones.aggregate([
        }
     }
 ]);
+
+// Obtener la cantida de usuarios por carrera
+db.usuarios.aggregate([
+    {
+       $group: {
+          _id: "$carrera",
+          cantidad_usuarios: { $sum: 1 }
+       }
+    }
+]);
