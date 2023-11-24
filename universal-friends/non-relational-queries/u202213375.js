@@ -1,15 +1,22 @@
-/*Insertar un docente nuevo */
-db.docentes.insertOne({
-    nombre: 'Alan',
-    apellido_paterno: 'Tito',
-    apellido_materno: 'Gutierrez'
-});
+/* Buscar Carreras Seleccionadas */
+ db.usuarios.aggregate([
+    {
+      $match: {
+        $or: [
+          { carrera: 'Ingeniería Informática' },
+          { carrera: 'Medicina' },
+          { carrera: 'Administración de Empresas' }
+        ]
+      }
+    }
+  ]);
 
-/*Buscar Alumnos por carreras y dar con la info */
-db.usuarios.find({
-    $or: [
-        { carrera: 'Ingeniería Informática' },
-        { carrera: 'Medicina' },
-        { carrera: 'Administración de Empresas' }
-    ]
-});
+  /*Contar Cantidad de usuarios por carrera */
+  db.usuarios.aggregate([
+    {
+      $group: {
+        _id: "$carrera",
+        cantidad: { $sum: 1 }
+      }
+    }
+  ]);
